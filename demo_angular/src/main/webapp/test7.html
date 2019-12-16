@@ -1,0 +1,47 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>入门小Demo-7-循环对象数组</title>
+    <script src="angular.min.js"></script>
+
+    <script>
+
+        var app = angular.module("myApp", []);
+        app.controller("myController", function ($scope) {
+            $scope.list = [{
+                'id':'1',
+                'name':'丽丽',
+                'gender':'女'
+            }, {
+                'id':'2',
+                'name':'玲玲',
+                'gender':'女'
+            }, {
+                'id':'3',
+                'name':'白白',
+                'gender':'男'
+            }];
+        })
+
+
+
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+
+<table border="1" align="center">
+    <tr>
+        <td>编号</td>
+        <td>姓名</td>
+        <td>性别</td>
+    </tr>
+    <tr ng-repeat="entity in list">
+        <td>{{entity.id}}</td>
+        <td>{{entity.name}}</td>
+        <td>{{entity.gender}}</td>
+    </tr>
+</table>
+
+
+</body>
+</html>

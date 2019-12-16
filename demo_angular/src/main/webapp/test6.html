@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>入门小Demo-6-循环数组</title>
+    <script src="angular.min.js"></script>
+
+    <script>
+
+        var app = angular.module("myApp", []);
+        app.controller("myController", function ($scope) {
+            $scope.list = ['q', 'w', 'e', 'r', 't'];
+        })
+
+
+
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+
+<ul>
+    <li ng-repeat="entity in list">{{entity}}</li>
+</ul>
+
+
+</body>
+</html>

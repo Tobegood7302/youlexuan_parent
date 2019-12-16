@@ -1,0 +1,35 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>入门小Demo-5-事件指令</title>
+    <script src="angular.min.js"></script>
+
+    <script>
+
+        var app = angular.module("myApp", []);
+        app.controller("myController", function ($scope) {
+            $scope.add = function () {
+
+                $scope.sum = parseInt($scope.xx) + parseInt($scope.yy);
+            }
+        })
+
+
+
+    </script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+
+<br/>
+第一个数字:<input type="text" ng-model="xx"/>
+<br/>
+第二个数字:<input type="text" ng-model="yy"/>
+<hr/>
+<button ng-click="add()">点击出结果</button>
+两数相加为:{{sum}}
+
+
+
+
+</body>
+</html>

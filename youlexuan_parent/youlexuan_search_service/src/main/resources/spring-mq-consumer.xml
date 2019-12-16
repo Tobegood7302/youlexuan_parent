@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    		http://www.springframework.org/schema/beans/spring-beans.xsd
+    		http://www.springframework.org/schema/context
+    		http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供 -->
+    <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://192.168.56.101:61616" />
+    </bean>
+
+    <!-- Spring用于管理ConnectionFactory的ConnectionFactory -->
+    <bean id="connectionFactory"
+          class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="targetConnectionFactory" />
+    </bean>
+
+
+    <!-- 导入solr库, 消费端 -->
+    <bean id="youlexuanImportsolrQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="youlexuan_importsolr_queue" />
+    </bean>
+
+
+    <!-- 消息监听容器 -->
+    <bean
+            class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="youlexuanImportsolrQueue" />
+        <property name="messageListener" ref="importSolrListener" />
+    </bean>
+
+    <!-- 删除solr库, 消费端 manager -->
+    <bean id="youlexuanDeletesolrQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="youlexuan_deletesolr_queue" />
+    </bean>
+
+
+    <!-- 消息监听容器 -->
+    <bean
+            class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="youlexuanDeletesolrQueue" />
+        <property name="messageListener" ref="deleteSolrListener" />
+    </bean>
+
+    <!-- 删除solr库, 消费端 shop -->
+    <bean id="youlexuanShopDeletesolrQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg value="youlexuan_shop_deletesolr_queue" />
+    </bean>
+
+
+    <!-- 消息监听容器 -->
+    <bean
+            class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="youlexuanShopDeletesolrQueue" />
+        <property name="messageListener" ref="shopDeleteSolrListener" />
+    </bean>
+
+
+</beans>
